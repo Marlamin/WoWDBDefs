@@ -58,9 +58,9 @@ jobs:
         with:
           dotnet-version: 9.0.x
       - name: Write exes.txt
-        run: echo "Wow.exe;Wow.exe\nWowT.exe;Wow.exe\nWowB.exe;Wow.exe\nWowClassic.exe;Wow.exe\nWowClassicT.exe;Wow.exe\nWowClassicB.exe;Wow.exe" > exes.txt
+        run: echo "Wow.exe;Wow.exe\nWowT.exe;Wow.exe\nWowB.exe;Wow.exe\nWowClassic.exe;Wow.exe\nWowClassicT.exe;Wow.exe\nWowClassicB.exe;Wow.exe" > $PWD/exes.txt
       - name: Run TACTTool
-        run: dotnet run --project TACTTool/TACTTool.csproj --configuration Release -- -p ${{ github.event.inputs.product }} -m list -i exes.txt -o extract
+        run: dotnet run --project TACTTool/TACTTool.csproj --configuration Release -- -p ${{ github.event.inputs.product }} -m list -i $PWD/exes.txt -o extract
         env:
           DOTNET_NOLOGO: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
