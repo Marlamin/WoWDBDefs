@@ -53,6 +53,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'Marlamin/TACTSharp'
+          path: 'TACTSharp'
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -60,11 +61,13 @@ jobs:
       - name: Write exes.txt
         run: echo "Wow.exe;Wow.exe\nWowT.exe;Wow.exe\nWowB.exe;Wow.exe\nWowClassic.exe;Wow.exe\nWowClassicT.exe;Wow.exe\nWowClassicB.exe;Wow.exe" > $PWD/exes.txt
       - name: Run TACTTool
-        run: dotnet run --project TACTTool/TACTTool.csproj --configuration Release -- -p ${{ github.event.inputs.product }} -m list -i $PWD/exes.txt -o extract
+        run: dotnet run --project TACTSharp/TACTTool/TACTTool.csproj --configuration Release -- -p ${{ github.event.inputs.product }} -m list -i $PWD/exes.txt -o extract
         env:
           DOTNET_NOLOGO: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      - name: Cat exes.txt
+        run: cat $PWD/exes.txt
       - name: Dump raw DBDs
         run: dotnet run --project $PWD/code/C#/DBDefsDumper/ --configuration Release -- extract/Wow.exe dumpeddbd ${{ github.event.inputs.build }}
         env:
